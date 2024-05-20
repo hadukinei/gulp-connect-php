@@ -5,10 +5,10 @@
   "main": "index-compat.js",
   "scripts": {
     "__anchor": "cd .",
-    "test-compat": "npm run __anchor; mocha ./test",
-    "test-normative": "npm run __anchor; GCP_ES6=1 mocha ./test",
-    "test": "npm run test-normative; npm run test-compat",
-    "prepack": "npm run __anchor; ./convert.sh"
+    "test-compat": "npm run __anchor&& mocha ./test",
+    "test-normative": "npm run __anchor&& GCP_ES5=1 mocha ./test",
+    "test": "npm run test-normative&& npm run test-compat",
+    "prepack": "npm run __anchor&& bash ./convert.sh"
   },
   "repository": {
     "type": "git",
@@ -25,16 +25,15 @@
   "bugs": {
     "url": "https://github.com/micahblu/gulp-php/issues"
   },
-  "dependencies": {
-    "bin-version-check": "^2.1.0",
-    "opn": "^1.0.0"
-  },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-es2016": "^6.24.1",
-    "babel-preset-es2017": "^6.24.1",
-    "mocha": "^3.2.0",
+    "@babel/cli": "^7.24.5",
+    "@babel/plugin-proposal-unicode-property-regex": "^7.18.6",
+    "@babel/preset-env": "^7.24.5",
+    "mocha": "^10.4.0",
     "supertest": "^3.0.0"
+  },
+  "dependencies": {
+    "binary-version-check": "^6.1.0",
+    "open": "^10.1.0"
   }
 }

@@ -4,7 +4,7 @@
 
 IN_FILE='index.js'
 OUT_FILE='index-compat.js'
-BABEL_PATH='./node_modules/babel-cli/bin/babel.js'
+BABEL_PATH='./node_modules/@babel/cli/bin/babel.js'
 
 # Get script location, resolve if a link.
 export SCRIPT_ROOT_ENV_SOURCE="${BASH_SOURCE[0]}"
@@ -22,7 +22,8 @@ if [ ! -f "$BABEL_PATH" ]; then
 fi
 
 echo "/* The following JavaScript file was preprocessed from $IN_FILE via Babel for support on older Node installations. */" > "$OUT_FILE.tmp"
-"$BABEL_PATH" "$IN_FILE" --presets es2017,es2016,es2015 | sed '1d' >> "$OUT_FILE.tmp"  || { echo 'Babel Processing Failed.' ;  rm "$OUT_FILE.tmp"; exit 1; }
+"$BABEL_PATH" "$IN_FILE" --presets es5 | sed '1d' >> "$OUT_FILE.tmp"  || { echo 'Babel Processing Failed.' ;  rm "$OUT_FILE.tmp"; exit 1; }
+#npx babel index.js --out-dir dist --presets=@babel/preset-env
 mv "$OUT_FILE.tmp" "$OUT_FILE"
 
 popd || { echo 'Could not return from primary directory.' ; exit 1; }

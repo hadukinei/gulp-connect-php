@@ -1,29 +1,29 @@
-/* The following JavaScript file was preprocessed from index.js via Babel for support on older Node installations. */
+/* jshint esversion: 6, node: true */
 'use strict';
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 (function _gulp_connect_php_module_scoping(OPTIONS_SPAWN_OBJ, OPTIONS_PHP_CLI_ARR) {
   var childProcess = require('child_process');
   var spawn = childProcess.spawn;
   var exec = childProcess.exec;
   var http = require('http');
-  var open = require('opn');
-  var binVersionCheck = require('bin-version-check');
+  var open = require('open');
+  var binVersionCheck = require('binary-version-check');
   var fs = require('fs');
 
   //let counter = 0;
 
   function EnumSet() {
     var _this = this;
-
-    [].concat(Array.prototype.slice.call(arguments)).forEach(function (x) {
+    Array.prototype.slice.call(arguments).forEach(function (x) {
       _this[x] = Symbol(x);
     });
   }
-
   var PhpDevelopmentServerConnection = function _PhpDevelopmentServerConnection_private_scope() {
     var Status = new EnumSet('NEW', 'STARTING', 'STARTED', 'FINISHED');
 
@@ -38,7 +38,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       //console.log(`[${this.counter}] checkServer`);
 
       if (self.status !== Status.STARTING) return;
-
       setTimeout(function _checkServer_fire() {
         http.request({
           method: 'HEAD',
@@ -46,14 +45,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           port: port
         }, function _checkServer_httpCallback(res) {
           var statusCodeType = Number(res.statusCode.toString()[0]);
-
           if ([2, 3, 4].indexOf(statusCodeType) !== -1) {
             return cb(true);
           } else if (statusCodeType === 5) {
             console.log('Server docroot returned 500-level response. Please check ' + 'your configuration for possible errors.');
             return cb(true);
           }
-
           checkServer.call(self, hostname, port, cb);
         }).on('error', function _checkServer_httpError(err) {
           // back off after 1s
@@ -71,8 +68,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
      *
      * {@link http://php.net/manual/en/features.commandline.webserver.php}
      */
-
-    var PhpDevelopmentServerConnection = function () {
+    var PhpDevelopmentServerConnection = /*#__PURE__*/function () {
       /**
        * Create a new Instance
        * @param opts Default Options. Will be merged with our own internal set of default options. Can be overwridden in the connect ('server') call.
@@ -80,16 +76,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
        */
       function PhpDevelopmentServerConnection(opts) {
         _classCallCheck(this, PhpDevelopmentServerConnection);
-
         //this.counter = ++counter;
         //console.log(`[${this.counter}] constructor`);
 
         this.status = Status.NEW;
-
         this.checkServerTries = 0;
-
         this.workingPort = 8000;
-
         this.defaults = Object.assign({
           port: 8000,
           hostname: '127.0.0.1',
@@ -101,7 +93,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           configCallback: null,
           debug: false
         }, opts || {});
-
         return this; // `new` bug
       }
 
@@ -109,10 +100,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
        * 'Close'/Shutdown the PHP Development Server
        * @param cb Optional single parameter Callback. Parameter is the return (if any) of the node `ChildProcess.kill(...)` call or nothing if not started.
        */
-
-
-      _createClass(PhpDevelopmentServerConnection, [{
-        key: 'closeServer',
+      return _createClass(PhpDevelopmentServerConnection, [{
+        key: "closeServer",
         value: function closeServer(cb) {
           cb = cb || function _closeServerCb_noop() {};
           //console.log(`[${this.counter}] closeServer`);
@@ -123,13 +112,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             }, 5);
             return;
           }
-
           if (this.childProcess) {
             cb(this.childProcess.kill('SIGKILL'));
             this.status = Status.FINISHED;
             return;
           }
-
           cb();
         }
 
@@ -137,40 +124,36 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
          * Get the port the server is running on.
          * @returns {number|*} Port number.
          */
-
       }, {
-        key: 'server',
-
+        key: "port",
+        get: function get() {
+          return this.workingPort;
+        }
 
         /**
          * Start the Server
          * @param options Optional Server Options to overwrite the defaults in the CTor.
          * @param cb Optional Callback for Completion. May pass in an error when there is a fault.
          */
+      }, {
+        key: "server",
         value: function server(options, cb) {
           //console.log(`[${this.counter}] server`);
           cb = cb || function _serverCB_noop() {};
-
           var self = this;
-
           if (this.status !== Status.NEW && this.status !== Status.FINISHED) {
             return cb(new Error('You may not start a server that is starting or started.'));
           }
-
           options = Object.assign({}, this.defaults, options);
-
           this.workingPort = options.port;
           var host = options.hostname + ':' + options.port;
           var args = ['-S', host, '-t', options.base];
-
           if (options.ini) {
             args.push('-c', options.ini);
           }
-
           if (options.router) {
             args.push(require('path').resolve(options.router));
           }
-
           if (options.debug) {
             spawn = function _debugSpawn(outerSpawn) {
               return function debugSpawnWrapper(file, args, options) {
@@ -178,25 +161,21 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 console.log(file);
                 console.log(args);
                 console.log(options);
-
                 return outerSpawn(file, args, options);
               };
             }(spawn);
           }
-
           if (options.configCallback === null || options.configCallback === undefined) {
             options.configCallback = function noOpConfigCallback(type, collection) {
               return collection;
             };
           }
-
           spawn = function _configCallbackSpawn(outerSpawn) {
             return function configCallbackSpawnWrapper(file, spawnArgs, spawnOptions) {
               return outerSpawn(file, options.configCallback(OPTIONS_PHP_CLI_ARR, spawnArgs) || spawnArgs, options.configCallback(OPTIONS_SPAWN_OBJ, spawnOptions) || spawnOptions);
             };
           }(spawn);
-
-          binVersionCheck('"' + options.bin + '"', '>=5.4', function _binVerCheck(err) {
+          binVersionCheck("\"".concat(options.bin, "\""), '>=5.4', function _binVerCheck(err) {
             if (err) {
               cb(err);
               return;
@@ -225,27 +204,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             }.bind(this));
           }.bind(this));
         }
-      }, {
-        key: 'port',
-        get: function get() {
-          return this.workingPort;
-        }
       }]);
-
-      return PhpDevelopmentServerConnection;
     }();
-
     return PhpDevelopmentServerConnection;
   }();
-
   module.exports = function _export_scoping() {
-
     var returnStructure = PhpDevelopmentServerConnection;
-
     var adopterBinder = function adopterBinder(adopter, inst, method) {
       return adopter[method] = inst[method].bind(inst);
     };
-
     returnStructure.compat = function _naught_version_compatibility() {
       // This is segregated beacuse in the future around v1.5 we will make it emit a warning.
       // In v2.0 we will gut it completely.
@@ -258,11 +225,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     // You cannot actually bind a function to a method directly... so... lets manually bind to get a function that calls the right instance.
     adopterBinder(returnStructure, returnStructure.compat, 'server');
     adopterBinder(returnStructure, returnStructure.compat, 'closeServer');
-
     returnStructure.OPTIONS_SPAWN_OBJ = OPTIONS_SPAWN_OBJ;
     returnStructure.OPTIONS_PHP_CLI_ARR = OPTIONS_PHP_CLI_ARR;
-
     return returnStructure;
   }();
 })('spawn', 'php_args');
-
