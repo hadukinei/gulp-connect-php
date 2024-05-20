@@ -1,18 +1,18 @@
 {
   "name": "gulp-connect-php",
-  "version": "1.0.3",
+  "version": "0.0.1",
   "description": "Starts a php server",
   "main": "index-compat.js",
   "scripts": {
     "__anchor": "cd .",
     "test-compat": "npm run __anchor&& mocha ./test",
-    "test-normative": "npm run __anchor&& GCP_ES5=1 mocha ./test",
+    "test-normative": "npm run __anchor&& GCP_ES6=1 mocha ./test",
     "test": "npm run test-normative&& npm run test-compat",
     "prepack": "npm run __anchor&& bash ./convert.sh"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/micahblu/gulp-connect-php"
+    "url": "https://github.com/hadukinei/gulp-connect-php"
   },
   "keywords": [
     "gulp",
@@ -21,10 +21,9 @@
     "connect"
   ],
   "author": "micahblu",
+  "private": "true",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/micahblu/gulp-php/issues"
-  },
+  "publisher": "hadukinei",
   "devDependencies": {
     "@babel/cli": "^7.24.5",
     "@babel/plugin-proposal-unicode-property-regex": "^7.18.6",
